@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store'
+Vue.prototype.$store = store;
 import cuCustom from './colorui/components/cu-custom.vue'
 import uniTag from './components/uni-tag/uni-tag.vue'
 import uniCountdown from "@/components/uni-countdown/uni-countdown.vue"
@@ -12,6 +14,10 @@ Vue.component('uni-countdown',uniCountdown)
 Vue.component('uni-card',uniCard)
 Vue.component('calendar',calendar)
 Vue.component('avatar',avatar)
+
+
+import {request} from './utils/index.js';
+Vue.prototype.$request = request;
 
 Vue.config.productionTip = false
 

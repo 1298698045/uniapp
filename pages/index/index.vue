@@ -5,7 +5,7 @@
 			<!-- <block slot="backText">返回</block> -->
 			<block slot="content">首页</block>
 		</cu-custom>
-		<van-search :value="value" placeholder="请输入搜索关键词" />
+		<van-search :value="value" placeholder="请输入搜索关键词" @change="getChange" @search="getSearch" />
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 			<swiper-item v-for="(item,index) in imgList" :key="index" @click="getImg(index)">
 				<view class="swiper-item">
@@ -13,7 +13,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
-		<van-card num="2" tag="标签" price="10.00" desc="描述信息" title="商品标题" :thumb="imageURL">
+		<van-card :num="ins" tag="标签" price="10.00" desc="描述信息" title="商品标题" :thumb="imageURL">
 			<view slot="footer">
 				<van-button @click="getDetail" plain type="primary" size="mini">详情</van-button>
 				<van-button size="mini">购买</van-button>
@@ -58,15 +58,43 @@
 			}
 		},
 		onLoad() {
-
+			this.$request('https://api.aplusx.com/jiaxiao/v1/aplus-jx-public/universal/user/authentication', 'post', {
+				clientType: "coach_app",
+				loginName: "15525501717",
+				password: "15525501717"
+			}).then((res) => {
+				console.log(res);
+			})
+		},
+		computed: {
+			ins() {
+				// return this.$store.state.cont;
+				return this.$store.getters.contGetter;
+			}
 		},
 		methods: {
-			getImg(index){
+			getImg(index) {
 				console.log(index);
 			},
 			getDetail() {
+				// this.$store.commit('add');
+				this.$store.dispatch('activeAdd');
 				wx.navigateTo({
 					url: "/pages/detail/detail"
+				})
+			},
+			getChange(v) {
+				this.value = v.mp.detail;
+			},
+			getSearch() {
+				var that = this;
+				wx.showToast({
+					title: '正在搜索~',
+					icon: 'none',
+					duration: 1000,
+					success: () => {
+						that.value = "";
+					}
 				})
 			}
 		}

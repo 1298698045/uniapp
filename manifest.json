@@ -63,11 +63,7 @@
             "minified" : true
         },
         "usingComponents" : true,
-        "permission" : {
-            "scope.userLocation" : {
-                "desc" : "C:\\Program Files (x86)\\Tencent\\微信web开发者工具"
-            }
-        }
+        "permission" : {}
     },
     "mp-alipay" : {
         "usingComponents" : true
